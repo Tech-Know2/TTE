@@ -125,7 +125,9 @@ public class PlacementScript : MonoBehaviour
                         else
                         {
                             solidPlacement = false;
-                            Debug.Log("Tile not under a city's control");
+
+                            NotificationController notificationController = playerScript.notificationController;
+                            notificationController.NewNotification("Building", "Can't Build There", "That tile is not under the control of a near by city", false);
                         }
                     }
                     else

@@ -21,11 +21,18 @@ public class TechDisplay : MonoBehaviour
     private Tech previousTech;
     public EconomyManager economyManager;
 
+    //Notification System
+    private NotificationController notificationController;
+
     void Start()
     {
         // Find the Cloned Tech Script
         Transform playerAndCameraRig = GameObject.Find("Player and Camera Rig")?.transform;
         clonedTechData = playerAndCameraRig.GetComponentInChildren<ClonedTechData>();
+
+        //Connect to the Notification Tech System
+        playerScript = playerAndCameraRig.GetComponent<PlayerScript>();
+        notificationController = playerScript.notificationController;
 
         currentTechButton = GetComponent<Button>();
         tech = Instantiate(originalTech);
@@ -105,11 +112,11 @@ public class TechDisplay : MonoBehaviour
             // Add the name of the researched tech to the list
             researchedTechNames.Add(tech.techName);
 
-            print(tech.techName + " Researched");
+            notificationController.NewNotification("Tech Research", "New Tech Researched", "You have researched " + tech.techName, true);
         }
         else
         {
-            print("Cannot research " + tech.techName);
+            notificationController.NewNotification("Tech Research", "Unable to research this Tech", "You're unable to research " + tech.techName, false);
         }
 
         CheckSettlmentStatus();

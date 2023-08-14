@@ -43,6 +43,7 @@ public class PlayerScript : MonoBehaviour
 
     //Controlling the Interactions with the Cards In Game
     public CardEffectManager cardEffectManager;
+    public NotificationController notificationController;
 
     // Start is called before the first frame update
     void Start()

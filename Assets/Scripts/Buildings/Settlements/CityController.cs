@@ -24,6 +24,10 @@ public class CityController : MonoBehaviour
     public List<GameObject> tilesUnderCityControl = new List<GameObject>();
     public List<Unit> settlementUnits = new List<Unit>();
 
+    //Notification System
+    private NotificationController notificationController;
+    private PlayerScript playerScript;
+
     public void SettlementStart()
     {
         buildingDataController.controlSphere.SetActive(true);
@@ -40,6 +44,22 @@ public class CityController : MonoBehaviour
         calculatedLoyalty = settlementData.calculatedLoyalty;
 
         CheckCollision();
+
+        //Notification System
+        Transform playerAndCameraRig = GameObject.Find("Player and Camera Rig")?.transform;
+
+        if (playerAndCameraRig != null)
+        {
+            playerScript = playerAndCameraRig.GetComponent<PlayerScript>();
+            notificationController = playerScript.notificationController;
+        }
+        else
+        {
+            Debug.LogError("Could not find game object named 'Player and Camera Rig'.");
+            return;
+        }
+            
+        notificationController.NewNotification("Settlement", "New Settlement Established", "Great work establishing a new settlement. The people of " + cityName + "are thrilled to be joining your empire", true);
     }
 
     public void UpdateCityDisplayValues() //Update all of the variables to the new and updated data

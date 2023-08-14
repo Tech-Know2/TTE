@@ -12,6 +12,10 @@ public class TechTreeController : MonoBehaviour
     public RawImage nonagon;
     public CameraController cameraController;
 
+    //Notification System Connections
+    private NotificationController notificationController;
+    private PlayerScript playerScript;
+
     public bool isSettlementTechResearched;
     private bool scrollEnabled;
 
@@ -77,6 +81,23 @@ public class TechTreeController : MonoBehaviour
         } else 
         {
             scrollEnabled = false;
+
+            //Notification System
+            Transform playerAndCameraRig = GameObject.Find("Player and Camera Rig")?.transform;
+
+            if (playerAndCameraRig != null)
+            {
+                playerScript = playerAndCameraRig.GetComponent<PlayerScript>();
+                notificationController = playerScript.notificationController;
+            }
+            else
+            {
+                Debug.LogError("Could not find game object named 'Player and Camera Rig'.");
+                return;
+            }
+
+            
+            notificationController.NewNotification("Tech Tree", "Unable to Scroll", "If you wish to scroll through the tech branches, research the required tech (Settlements).", false);
         }
     }
 

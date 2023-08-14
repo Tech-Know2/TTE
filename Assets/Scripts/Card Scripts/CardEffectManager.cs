@@ -10,6 +10,7 @@ public class CardEffectManager : MonoBehaviour
     public Card card;
     private Government government;
     public PlayerScript playerScript;
+    private NotificationController notificationController;
     public EconomyManager economyManager;
     public BuildingPopUp buildingPopUp;
 
@@ -320,7 +321,7 @@ public class CardEffectManager : MonoBehaviour
 
     public void AssignGovernment(int i)
     {
-        print("Assigned Government" + governmentName);
+        notificationController.NewNotification("Government Assigned", "Government Selected", "Congrats on choosing the " + government.name, true);
         playerScript.government = government;
     }
 
